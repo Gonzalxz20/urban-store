@@ -33,26 +33,26 @@ scripts/dev.js          Servidor para probar en tu computador
 
 ## 2. Publicarla como CSV y dejarla privada
 
-1. **Archivo > Compartir > Publicar en la web** → pestaña `Hoja 1` → formato **Valores separados por comas (.csv)** → Publicar. Copia el enlace.
+1. **Archivo > Compartir > Publicar en la web** → la pestaña donde están tus prendas (hoy es `Hoja 4`) → formato **Valores separados por comas (.csv)** → Publicar. Copia el enlace.
 2. **Compartir** (botón verde) → Acceso general: **Restringido**. Así nadie puede abrir la planilla; solo existe el enlace CSV, que queda guardado en Vercel y nunca aparece en la tienda.
 
 > Google actualiza el CSV publicado cada ~5 minutos y Vercel guarda la respuesta 1 minuto, así que los cambios de la hoja tardan unos minutos en verse.
 
-## 3. Subir a Vercel
+## 3. Subir a Vercel (desde GitHub)
 
-1. Crea una cuenta en [vercel.com](https://vercel.com) e instala la CLI, o usa `npx`:
-   ```bash
-   npx vercel
-   ```
-   Acepta los valores por defecto (Framework: **Other**, sin comando de build).
-   El archivo `vercel.json` configura automáticamente las funciones de API.
-2. En el proyecto de Vercel: **Settings > Environment Variables** y agrega:
-   - `SHEET_CSV_URL` = el enlace CSV del paso 2
-   - `WHATSAPP_TIENDA` = `+56943544565` (el número que recibe los pedidos)
-3. Publica en producción:
-   ```bash
-   npx vercel --prod
-   ```
+El proyecto ya está en GitHub (`Gonzalxz20/urban-store`), así que no necesitas la terminal:
+
+1. Sube tus últimos cambios a GitHub (commit + push).
+2. En [vercel.com/new](https://vercel.com/new) elige **Import** junto a `urban-store`.
+3. En la pantalla de configuración:
+   - **Framework Preset:** Other
+   - **Build Command / Output Directory:** déjalos vacíos
+   - **Environment Variables:** agrega
+     - `SHEET_CSV_URL` = el enlace CSV del paso 2
+     - `WHATSAPP_TIENDA` = `+56 9 5417 9298` (el número que recibe los pedidos)
+4. Presiona **Deploy**. Desde ahí, cada push a `main` se publica solo.
+
+Para comprobar que funciona, abre `https://TU-PROYECTO.vercel.app/api/productos`: debe mostrar tus prendas en formato JSON. Si dice "Falta configurar SHEET_CSV_URL", agrega la variable en **Settings > Environment Variables** y vuelve a desplegar (**Deployments > ⋯ > Redeploy**), porque las variables nuevas solo se aplican en el siguiente despliegue.
 
 ## Probar en tu computador
 

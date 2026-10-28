@@ -119,9 +119,11 @@ function toProducts(rows) {
     }).filter(p => p.disponibilidad !== 'oculto' && p.nombre && p.precio > 0);
 }
 
-// "$18.990", "18990" y "18,990" valen lo mismo (CLP no usa decimales)
+// "$18.990", "18990", "18,990" y "$18,990.00" valen lo mismo (CLP no usa decimales).
+// Los decimales (1 o 2 dígitos al final) se descartan; 3 dígitos son miles.
 function toPrice(value) {
-    return parseInt(String(value || '').replace(/[^0-9]/g, ''), 10) || 0;
+    const text = String(value || '').replace(/[^0-9.,]/g, '').replace(/[.,]\d{1,2}$/, '');
+    return parseInt(text.replace(/[^0-9]/g, ''), 10) || 0;
 }
 
 // Convierte enlaces de Google Drive normales a enlaces directos de imagen

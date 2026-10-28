@@ -2,6 +2,9 @@
 .env.local
 .env
 
+# Vercel (se crea al enlazar el proyecto)
+.vercel
+
 # Dependencias
 node_modules
 

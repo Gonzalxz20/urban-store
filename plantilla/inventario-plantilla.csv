@@ -1,3 +1,3 @@
 id,nombre,categoria,marca,talla,estado,precio,precio_anterior,disponible,destacado,imagenes,medidas,descripcion
-,RV-001,Polera Básica,Poleras,Zara,M,Como Nuevo,18990,24990,SI,SI,,Largo 70 cm | Ancho 55 cm,Polera de algodón básica
-,RV-002,Chaqueta Denim,Chaquetas,Levi's,L,Nuevo,34990,,SI,,,
+RV-001,Polera Básica,Poleras,Zara,M,Como Nuevo,18990,24990,SI,SI,,Largo 70 cm | Ancho 55 cm,Polera de algodón básica
+RV-002,Chaqueta Denim,Chaquetas,Levi's,L,Nuevo,34990,,SI,,,,
