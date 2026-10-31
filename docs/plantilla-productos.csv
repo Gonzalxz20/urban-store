@@ -1,0 +1,3 @@
+id,nombre,categoria,marca,tallas,colores,estado,precio,precio_anterior,stock,disponible,destacado,nuevo,mas_vendido,imagenes,medidas,caracteristicas,descripcion
+EJEMPLO-1,Producto de ejemplo con tallas,Ropa Hombre,Marca,S | M | L,Negro | Blanco,Nuevo,19990,24990,5,OCULTO,SI,SI,,https://drive.google.com/file/d/ID_DE_TU_FOTO/view,Largo 70 cm | Ancho 55 cm,Algodón 100% | Lavar a máquina,"Fila de ejemplo: está OCULTA, cámbiala por tus productos reales."
+EJEMPLO-2,Producto de ejemplo sin variantes,Tecnología,Marca,,,Nuevo,49990,,10,OCULTO,,,SI,https://drive.google.com/file/d/ID_DE_TU_FOTO/view,,Garantía 6 meses | Incluye cargador,"Fila de ejemplo: está OCULTA, cámbiala por tus productos reales."

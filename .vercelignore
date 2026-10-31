@@ -1,4 +1,6 @@
 scripts
 .claude
-plantilla
+
 .env*
+.respaldo
+docs
