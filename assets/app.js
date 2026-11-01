@@ -44,6 +44,72 @@
         swap: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>'
     };
 
+    // Íconos de categoría. La hoja "categorias" puede elegir uno con la columna "icono";
+    // si no, se deduce del nombre de la categoría (CAT_KEYWORDS, en orden).
+    const CAT_ICONS = {
+        polera: 'M8 4 3.5 6.5l1.8 3.8 2.2-.8V20h9V9.5l2.2.8 1.8-3.8L16 4c-.6 1.4-2.2 2.3-4 2.3S8.6 5.4 8 4z',
+        camisa: 'M8.5 4 3.5 6.5l1.8 3.8 2.2-.8V20h9V9.5l2.2.8 1.8-3.8-5-2.5M8.5 4l1.5 4.2 2-1.4 2 1.4L15.5 4M12 10.5v.01M12 13.5v.01M12 16.5v.01',
+        vestido: 'M9.5 3 9 7.5 5.5 20c4.3.8 8.7.8 13 0L15 7.5 14.5 3M9.5 3c.7 1.1 1.5 1.6 2.5 1.6s1.8-.5 2.5-1.6M9 7.5h6',
+        infantil: 'M9 3.5c.6 1.3 1.7 2 3 2s2.4-.7 3-2l4 2-1.5 3.5L16 8.5V15c0 1-.5 1.7-1.3 2.2L13 18.5V20h-2v-1.5l-1.7-1.3C8.5 16.7 8 16 8 15V8.5l-1.5.5L5 5.5z',
+        poleron: 'M9 4 5 5.5 3 16l2.5.6L7 10v10h10V10l1.5 6.6L21 16 19 5.5 15 4c-.6 1.2-1.7 1.8-3 1.8S9.6 5.2 9 4zM9 4c0-1.2 1.3-2 3-2s3 .8 3 2M10.8 5.6v2.6M13.2 5.6v2.6M7 18h10',
+        chaqueta: 'M9 3.5 5 5 3 16l2.5.6L7 10v10.5h10V10l1.5 6.6L21 16 19 5l-4-1.5M9 3.5 12 8l3-4.5M12 8v12.5M8.8 14.5h1.8M13.4 14.5h1.8',
+        pantalon: 'M6.5 3h11l1.5 17.5h-5L12 9.5 10 20.5H5zM6.3 6h11.4M12 6v3.5',
+        zapatilla: 'M3 16V8.5a1 1 0 0 1 1-1h3c.4 1.4 1.7 2.5 3.4 2.5H11l6.7 2.8c1.9.8 3.3 1.9 3.3 3.2zM3 16v1.5A1.5 1.5 0 0 0 4.5 19h15a1.5 1.5 0 0 0 1.5-1.5V16M12.6 10.7l-.9 1.8M15.2 11.8l-.9 1.8',
+        bolso: 'M5 9.5h14a1 1 0 0 1 1 1V19a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19v-8.5a1 1 0 0 1 1-1zM8.5 9.5V8a3.5 3.5 0 0 1 7 0v1.5M4 13.5h16M11 13.5V15h2v-1.5',
+        mochila: 'M7 9a5 5 0 0 1 10 0v10.5a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1zM10.5 4.2V3a1.5 1.5 0 0 1 3 0v1.2M9.5 14h5a1 1 0 0 1 1 1v3h-7v-3a1 1 0 0 1 1-1z',
+        lentes: 'M2 9.5h20M3.5 9.5V12a3.25 3.25 0 0 0 6.5 0V9.5M14 9.5V12a3.25 3.25 0 0 0 6.5 0V9.5',
+        reloj: 'M17 12a5 5 0 1 1-10 0 5 5 0 0 1 10 0zM9 8l.6-5h4.8L15 8M9 16l.6 5h4.8l.6-5M12 10v2l1.4 1.2',
+        joya: 'M6.5 9.5 9.5 5h5l3 4.5L12 20zM6.5 9.5h11M10 9.5l2 10.5 2-10.5M9.5 5l.5 4.5M14.5 5l-.5 4.5',
+        perfume: 'M9 8.5h6a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-8.5a2 2 0 0 1 2-2zM10.5 8.5v-2h3v2M9.5 3.5h5v3h-5z',
+        celular: 'M9 2.5h6a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2zM11 18.5h2',
+        audifonos: 'M4 16v-4a8 8 0 0 1 16 0v4M4 15.5a2 2 0 0 1 2-2h1V20H6a2 2 0 0 1-2-2zM20 15.5a2 2 0 0 0-2-2h-1V20h1a2 2 0 0 0 2-2z',
+        computador: 'M6 5h12a1 1 0 0 1 1 1v9H5V6a1 1 0 0 1 1-1zM2.5 15h19l-1.2 3H3.7z',
+        hogar: 'M4 10.5 12 4l8 6.5M6 9v11h12V9M10 20v-5.5h4V20',
+        belleza: 'M8.5 13h7v8h-7zM9.5 13v-2.5h5V13M10.5 10.5V6.2L13.5 4v6.5',
+        deportes: 'M5 8.5h3v7H5zM16 8.5h3v7h-3zM3 10.5h2v3H3zM19 10.5h2v3h-2zM8 12h8',
+        juguete: 'M18 13a6 6 0 1 1-12 0 6 6 0 0 1 12 0zM6.6 10.5A2.2 2.2 0 1 1 9.5 7.6M14.5 7.6a2.2 2.2 0 1 1 2.9 2.9M9.8 11.7v.01M14.2 11.7v.01M14.1 15.4c0 1-1 1.8-2.1 1.8s-2.1-.8-2.1-1.8 1-1.7 2.1-1.7 2.1.7 2.1 1.7zM12 14.6v.01',
+        mascota: 'M12 12.5c-2.4 0-4.5 2.6-4.5 4.8 0 1.4 1 2.2 2.3 2.2 1 0 1.5-.5 2.2-.5s1.2.5 2.2.5c1.3 0 2.3-.8 2.3-2.2 0-2.2-2.1-4.8-4.5-4.8zM8.1 10.2a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0zM11.2 6.8a1.7 1.7 0 1 1-3.4 0 1.7 1.7 0 0 1 3.4 0zM16.2 6.8a1.7 1.7 0 1 1-3.4 0 1.7 1.7 0 0 1 3.4 0zM19.1 10.2a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0z',
+        libro: 'M12 6.5C10.3 5.2 7.8 4.5 4 4.5V18c3.8 0 6.3.7 8 2 1.7-1.3 4.2-2 8-2V4.5c-3.8 0-6.3.7-8 2zM12 6.5V20',
+        otros: 'M4.5 4.5H10V10H4.5zM14 4.5h5.5V10H14zM4.5 14H10v5.5H4.5zM14 14h5.5v5.5H14z',
+        etiqueta: 'M4 4h7.2l8.3 8.3a1.5 1.5 0 0 1 0 2.1l-5.1 5.1a1.5 1.5 0 0 1-2.1 0L4 11.2zM9.2 8a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z'
+    };
+    const CAT_KEYWORDS = [
+        ['zapatilla', /zapat|calzado|\bbotas?\b|botin|sandalia/],
+        ['poleron', /poleron|hoodie|sweater|sueter|chaleco/],
+        ['polera', /polera|camiseta|remera|t-?shirt/],
+        ['chaqueta', /chaqueta|abrigo|parka|casaca|cortaviento|blazer/],
+        ['pantalon', /pantalon|jeans?|shorts?|calza|bermuda/],
+        ['vestido', /vestido|falda/],
+        ['camisa', /camisa|blusa/],
+        ['bolso', /bolso|cartera|billetera|bandolera|maleta/],
+        ['mochila', /mochila/],
+        ['lentes', /\blentes?\b|gafas?|anteojo/],
+        ['reloj', /reloj/],
+        ['joya', /joya|anillo|collar|\baros?\b|pulsera|bisuteria/],
+        ['perfume', /perfum|fragancia|colonia/],
+        ['celular', /celular|telefon|smartphone|movil/],
+        ['audifonos', /audio|audifono|parlante|musica/],
+        ['computador', /computa|notebook|laptop|gamer|videojuego|consola|tecnolog|electronica/],
+        ['infantil', /infantil|\bninos?\b|\bninas?\b|\bbebes?\b|kids|guagua|junior/],
+        ['vestido', /mujer|dama|femenin/],
+        ['camisa', /hombre|caballero|masculin/],
+        ['polera', /\bropa\b|vestuario|\bmoda\b/],
+        ['lentes', /accesorio/],
+        ['hogar', /hogar|\bcasa\b|deco|mueble|cocina|\bbanos?\b|jardin/],
+        ['belleza', /belleza|maquilla|cosmetic|cuidado/],
+        ['deportes', /deporte|fitness|\bgym\b|outdoor|entrena/],
+        ['juguete', /juguete|juego/],
+        ['mascota', /mascota|perro|gato/],
+        ['libro', /libro|libreria|papeleria|oficina/],
+        ['otros', /\botros?\b|varios/]
+    ];
+    function categoryIcon(c) {
+        const buscar = texto => (CAT_KEYWORDS.find(([, re]) => re.test(texto)) || [])[0];
+        const icono = c.icono || '';
+        const nombre = Object.hasOwn(CAT_ICONS, icono) ? icono : buscar(icono) || buscar(c.slug) || 'etiqueta';
+        return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${CAT_ICONS[nombre]}"/></svg>`;
+    }
+
     const state = {
         tienda: { nombre: STORE, whatsapp: '', pagoOnline: false, newsletter: false },
         productos: [],
@@ -436,14 +502,15 @@
             </section>`;
 
         const nCat = state.categorias.length;
-        const columnas = nCat % 5 === 0 ? 5 : nCat === 3 || nCat === 6 || nCat === 9 ? 3 : 4;
+        // Columnas que reparten las categorías en filas parejas (como máximo `max` por fila)
+        const columnas = max => Math.ceil(nCat / Math.ceil(nCat / max));
         const categorias = nCat ? `
             <section class="section container fade-in">
                 <div class="section-head"><h2 class="section-title">Categorías</h2><a class="section-link" href="/tienda">Ver todo</a></div>
-                <div class="cat-grid cols-${columnas}">
+                <div class="cat-grid tcols-${columnas(5)} cols-${columnas(6)}">
                     ${state.categorias.map(c => `
-                        <a class="cat-card ${c.imagen ? '' : 'no-img'}" href="/categoria/${esc(c.slug)}">
-                            ${c.imagen ? imgTag(c.imagen, { w: 500, sizes: '(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw', alt: '' }) : ''}
+                        <a class="cat-card" href="/categoria/${esc(c.slug)}">
+                            ${categoryIcon(c)}
                             <span>${esc(c.nombre)}</span>
                         </a>`).join('')}
                 </div>

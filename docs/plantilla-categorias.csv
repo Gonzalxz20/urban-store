@@ -1,11 +1,11 @@
-nombre,imagen,descripcion,orden,visible
-Ropa Mujer,,,1,SI
-Ropa Hombre,,,2,SI
-Ropa Infantil,,,3,SI
-Calzado,,,4,SI
-Accesorios,,,5,SI
-Tecnología,,,6,SI
-Hogar,,,7,SI
-Belleza,,,8,SI
-Deportes,,,9,SI
-Otros,,,10,SI
+nombre,icono,descripcion,orden,visible
+Ropa Mujer,vestido,,1,SI
+Ropa Hombre,camisa,,2,SI
+Ropa Infantil,infantil,,3,SI
+Calzado,zapatilla,,4,SI
+Accesorios,lentes,,5,SI
+Tecnología,computador,,6,SI
+Hogar,hogar,,7,SI
+Belleza,belleza,,8,SI
+Deportes,deportes,,9,SI
+Otros,otros,,10,SI

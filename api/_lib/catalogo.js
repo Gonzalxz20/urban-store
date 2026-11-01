@@ -178,14 +178,13 @@ function toProducts(rows) {
     }).filter(p => p.disponibilidad !== 'oculto' && p.nombre && p.precio > 0);
 }
 
-// La hoja "categorias" es opcional: nombre, imagen, descripcion, orden, visible.
+// La hoja "categorias" es opcional: nombre, icono, descripcion, orden, visible.
 // Las categorías que tengan productos pero no estén en la hoja se agregan al final.
 function toCategories(filas, productos) {
     const conteo = new Map();
     for (const p of productos) {
-        const actual = conteo.get(p.categoriaSlug) || { nombre: p.categoria, cantidad: 0, imagen: '' };
+        const actual = conteo.get(p.categoriaSlug) || { nombre: p.categoria, cantidad: 0 };
         actual.cantidad++;
-        if (!actual.imagen && p.imagenes[0]) actual.imagen = p.imagenes[0];
         conteo.set(p.categoriaSlug, actual);
     }
 
@@ -204,13 +203,13 @@ function toCategories(filas, productos) {
             slug,
             nombre: c.nombre,
             descripcion: c.descripcion || '',
-            imagen: convertDriveUrl(c.imagen || '') || datos.imagen,
+            icono: slugify(c.icono || ''),      // vacío: la tienda lo elige según el nombre
             cantidad: datos.cantidad
         });
     }
     for (const [slug, datos] of conteo) {
         if (vistos.has(slug)) continue;
-        resultado.push({ slug, nombre: datos.nombre, descripcion: '', imagen: datos.imagen, cantidad: datos.cantidad });
+        resultado.push({ slug, nombre: datos.nombre, descripcion: '', icono: '', cantidad: datos.cantidad });
     }
     return resultado;
 }

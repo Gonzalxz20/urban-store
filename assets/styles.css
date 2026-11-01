@@ -359,25 +359,27 @@ main { flex: 1; outline: none; }
 .hero-empty { display: grid; place-items: center; text-align: center; color: var(--ink); padding: 24px; }
 
 /* ==================== CATEGORÍAS ==================== */
-/* Filas centradas: si la última fila queda incompleta, sus tarjetas quedan al medio */
-.cat-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-.cat-card { position: relative; display: block; overflow: hidden; background: var(--soft); aspect-ratio: 3 / 4; flex: 0 0 calc((100% - 8px) / 2); }
-.cat-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
-.cat-card:hover img { transform: scale(1.04); }
-.cat-card span {
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    padding: 28px 12px 12px;
-    color: #fff;
-    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.55));
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+/* Mosaico de íconos en filas centradas (la última fila incompleta queda al medio).
+   En tablet y escritorio, tcols-N / cols-N (calculadas en app.js) reparten las
+   categorías en filas parejas y limitan el ancho de cada tarjeta. */
+.cat-grid { --gap: 8px; display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap); margin: 0 auto; }
+.cat-card {
+    flex: 0 0 calc((100% - 2 * var(--gap)) / 3);
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 4px;
+    background: var(--soft);
+    text-align: center;
+    transition: background-color 0.25s;
 }
-.cat-card small { display: block; font-weight: 400; letter-spacing: 0; text-transform: none; opacity: 0.85; }
-.cat-card.no-img { display: grid; place-items: center; }
-.cat-card.no-img span { position: static; background: none; color: var(--ink); text-align: center; }
+.cat-card svg { width: 30px; height: 30px; stroke-width: 1.25; transition: transform 0.35s var(--ease); }
+.cat-card span { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; line-height: 1.3; text-transform: uppercase; overflow-wrap: anywhere; hyphens: auto; }
+.cat-card:hover { background: #ebeae6; }
+.cat-card:hover svg { transform: translateY(-2px); }
 
 /* Marcas */
 .brands {
@@ -839,6 +841,11 @@ body.has-sticky .site-footer { padding-bottom: 80px; }
 .toast a { text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; font-weight: 600; }
 body.has-sticky .toast { bottom: calc(84px + var(--safe-bottom)); }
 
+/* Teléfonos angostos: nombres de categoría sin cortar palabras */
+@media (max-width: 359px) {
+    .cat-card span { font-size: 10px; }
+}
+
 /* ==================== TABLET ==================== */
 @media (min-width: 640px) {
     :root { --gutter: 24px; }
@@ -848,8 +855,14 @@ body.has-sticky .toast { bottom: calc(84px + var(--safe-bottom)); }
     .logo { font-size: 21px; letter-spacing: 0.14em; }
     .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 12px; }
     .product-rail { grid-auto-columns: 31%; gap: 12px; }
-    .cat-grid { gap: 12px; }
-    .cat-card { flex-basis: calc((100% - 24px) / 3); }
+    .cat-grid { --gap: 12px; max-width: calc(var(--cols) * 150px + (var(--cols) - 1) * var(--gap)); }
+    .cat-grid.tcols-1 { --cols: 1; }
+    .cat-grid.tcols-2 { --cols: 2; }
+    .cat-grid.tcols-3 { --cols: 3; }
+    .cat-grid.tcols-4 { --cols: 4; }
+    .cat-grid.tcols-5 { --cols: 5; }
+    .cat-card { flex-basis: calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols)); }
+    .cat-card svg { width: 34px; height: 34px; }
     .benefits { grid-template-columns: repeat(2, 1fr); }
     .benefit { border-right: 1px solid var(--line); }
     .newsletter-form { flex-direction: row; }
@@ -877,10 +890,16 @@ body.has-sticky .toast { bottom: calc(84px + var(--safe-bottom)); }
     .hero-dots { justify-content: flex-start; left: 64px; bottom: 40px; }
     .hero-dot { width: 40px; }
 
-    .cat-grid { gap: 16px; }
-    .cat-card { flex-basis: calc((100% - 48px) / 4); }
-    .cat-grid.cols-3 .cat-card { flex-basis: calc((100% - 32px) / 3); }
-    .cat-grid.cols-5 .cat-card { flex-basis: calc((100% - 64px) / 5); }
+    .cat-grid { --gap: 16px; max-width: calc(var(--cols) * 190px + (var(--cols) - 1) * var(--gap)); }
+    .cat-grid.cols-1 { --cols: 1; }
+    .cat-grid.cols-2 { --cols: 2; }
+    .cat-grid.cols-3 { --cols: 3; }
+    .cat-grid.cols-4 { --cols: 4; }
+    .cat-grid.cols-5 { --cols: 5; }
+    .cat-grid.cols-6 { --cols: 6; }
+    .cat-card { gap: 14px; }
+    .cat-card svg { width: 38px; height: 38px; }
+    .cat-card span { font-size: 12px; }
     .brands a:first-child { margin-left: auto; }
     .brands a:last-child { margin-right: auto; }
     .product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px 16px; }

@@ -49,12 +49,12 @@ Cada fila es un producto. Para empezar, importa `docs/plantilla-productos.csv` (
 
 ## 2. Categorías (opcional)
 
-Sin hacer nada, las categorías salen de la columna `categoria`. Para ordenarlas, ponerles foto y descripción, o esconderlas, crea una pestaña `categorias` en la misma planilla (puedes importar `docs/plantilla-categorias.csv`, que trae Ropa Mujer, Ropa Hombre, Ropa Infantil, Calzado, Accesorios, Tecnología, Hogar, Belleza, Deportes y Otros):
+Sin hacer nada, las categorías salen de la columna `categoria`. Para ordenarlas, elegir su ícono, ponerles descripción o esconderlas, crea una pestaña `categorias` en la misma planilla (puedes importar `docs/plantilla-categorias.csv`, que trae Ropa Mujer, Ropa Hombre, Ropa Infantil, Calzado, Accesorios, Tecnología, Hogar, Belleza, Deportes y Otros):
 
 | Columna | Qué poner |
 |---|---|
 | `nombre` | Igual que en la columna `categoria` de los productos |
-| `imagen` | Foto de la categoría (si no, se usa la del primer producto) |
+| `icono` | Ícono de la portada. Si lo dejas vacío, la tienda lo elige según el nombre (ej. `Polerones` → polerón). Para cambiarlo escribe uno de estos: `polera`, `camisa`, `vestido`, `infantil`, `poleron`, `chaqueta`, `pantalon`, `zapatilla`, `bolso`, `mochila`, `lentes`, `reloj`, `joya`, `perfume`, `celular`, `audifonos`, `computador`, `hogar`, `belleza`, `deportes`, `juguete`, `mascota`, `libro`, `otros`, `etiqueta` |
 | `descripcion` | Texto bajo el título de la categoría |
 | `orden` | 1, 2, 3… (orden en el menú y en la portada) |
 | `visible` | `NO` esconde la categoría **y sus productos** |
