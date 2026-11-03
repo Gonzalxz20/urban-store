@@ -371,8 +371,8 @@
         <article class="card ${isAvailable(p) ? '' : 'unavailable'}">
             <div class="card-visual">
                 <a class="card-media" href="${productUrl(p)}" aria-label="${esc(p.nombre)}">
-                    ${imgTag(main, { w: 500, sizes: '(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw', cls: `main ${alt ? 'has-alt' : ''}`, alt: p.nombre, eager })}
-                    ${alt ? imgTag(alt, { w: 500, sizes: '25vw', cls: 'alt', alt: '' }) : ''}
+                    ${imgTag(main, { w: 600, sizes: '(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw', cls: `main ${alt ? 'has-alt' : ''}`, alt: p.nombre, eager })}
+                    ${alt ? imgTag(alt, { w: 600, sizes: '25vw', cls: 'alt', alt: '' }) : ''}
                 </a>
                 ${badgesHtml(p)}
                 ${favButton(p)}
@@ -474,7 +474,7 @@
                 <div class="hero-slides" id="heroSlides">
                     ${slides.map((p, i) => `
                         <a class="hero-slide" href="${productUrl(p)}">
-                            ${imgTag(p.imagenes[0], { w: 1400, sizes: '100vw', alt: p.nombre, eager: i === 0 })}
+                            ${imgTag(p.imagenes[0], { w: 1600, sizes: '100vw', alt: p.nombre, eager: i === 0 })}
                             <div class="hero-copy">
                                 <p class="hero-kicker">${esc(p.categoria)}${p.marca ? ` · ${esc(p.marca)}` : ''}</p>
                                 <h2 class="hero-title">${esc(p.nombre)}</h2>
