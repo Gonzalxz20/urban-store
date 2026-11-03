@@ -1207,7 +1207,7 @@
         const datos = validateCheckout(form);
         if (!datos) return;
         const cliente = {
-            nombre: datos.nombre.trim(), email: datos.email.trim(), telefono: datos.telefono.trim(),
+            nombre: datos.nombre.trim(), email: (datos.email || '').trim(), telefono: datos.telefono.trim(),
             direccion: datos.direccion.trim(), comuna: datos.comuna.trim(), region: datos.region, notas: (datos.notas || '').trim()
         };
         const recordar = Boolean(datos.recordar);
