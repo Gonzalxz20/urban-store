@@ -1697,8 +1697,6 @@ Pedido ${id}`;
         });
 
         $('#searchPanelInput').addEventListener('input', e => renderSearchResults(e.target.value));
-        // En escritorio, el buscador del encabezado abre el panel con resultados al instante
-        $('.header-search input').addEventListener('focus', e => { e.target.blur(); openSearch(); });
 
         document.addEventListener('keydown', e => {
             if (e.key !== 'Escape') return;

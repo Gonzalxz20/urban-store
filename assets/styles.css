@@ -133,18 +133,6 @@ svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width:
 .logo span { color: var(--accent); margin: 0 1px; }
 .logo-sm { font-size: 17px; }
 
-.header-search {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-bottom: 1px solid var(--ink);
-    padding: 4px 2px;
-    margin-right: 8px;
-    width: 220px;
-}
-.header-search svg { width: 18px; height: 18px; }
-.header-search input { border: 0; outline: 0; background: none; width: 100%; font-size: 14px; }
-
 .main-nav ul {
     max-width: var(--max);
     margin: 0 auto;
