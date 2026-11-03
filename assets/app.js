@@ -14,7 +14,7 @@
     const NAV_CATEGORIAS = 7;        // categorías visibles en el menú de escritorio (el resto, en "Ver todo")
     const SIZE_ORDER = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
     const AVAILABILITY_RANK = { disponible: 0, reservado: 1, vendido: 2 };
-    const PAGOS_WHATSAPP = ['Efectivo', 'Transferencia Bancaria', 'Débito / Crédito'];
+    const PAGOS_WHATSAPP = ['Efectivo', 'Transferencia Bancaria'];
     const REGIONES = [
         'Arica y Parinacota', 'Tarapacá', 'Antofagasta', 'Atacama', 'Coquimbo', 'Valparaíso',
         'Metropolitana de Santiago', "Libertador Gral. Bernardo O'Higgins", 'Maule', 'Ñuble', 'Biobío',
@@ -422,14 +422,12 @@
         $('#mainNav').innerHTML = `
             <li><a href="/novedades">Novedades</a></li>
             ${cats.slice(0, NAV_CATEGORIAS).map(c => `<li><a href="/categoria/${esc(c.slug)}">${esc(c.nombre)}</a></li>`).join('')}
-            ${cats.length > NAV_CATEGORIAS ? '<li><a href="/tienda">Ver todo</a></li>' : ''}
-            ${state.productos.some(p => p.precioAnterior) ? '<li><a href="/ofertas" class="nav-sale">Ofertas</a></li>' : ''}`;
+            ${cats.length > NAV_CATEGORIAS ? '<li><a href="/tienda">Ver todo</a></li>' : ''}`;
         $('#drawerCategories').innerHTML = cats.map(c =>
             `<a href="/categoria/${esc(c.slug)}">${esc(c.nombre)} <small>${c.cantidad}</small></a>`).join('');
         $('#footerCategories').innerHTML = `
             <li><a href="/novedades">Novedades</a></li>
-            ${cats.slice(0, 8).map(c => `<li><a href="/categoria/${esc(c.slug)}">${esc(c.nombre)}</a></li>`).join('')}
-            <li><a href="/ofertas">Ofertas</a></li>`;
+            ${cats.slice(0, 8).map(c => `<li><a href="/categoria/${esc(c.slug)}">${esc(c.nombre)}</a></li>`).join('')}`;
 
         const wa = whatsappUrl(`Hola ${STORE}, tengo una consulta.`);
         const footerWa = $('#footerWhatsapp');
@@ -443,14 +441,9 @@
 
     let promoTimer;
     function startPromoBar() {
-        const mensajes = ['Envíos a todo el país'];
+        const mensajes = ['Envíos dentro de Curicó'];
         if (state.tienda.pagoOnline) mensajes.push('Pago seguro con Mercado Pago');
         mensajes.push('Atención personalizada por WhatsApp');
-        const ofertas = state.productos.filter(p => p.precioAnterior && isAvailable(p));
-        if (ofertas.length) {
-            const max = Math.max(...ofertas.map(discountPct));
-            mensajes.push(`Hasta -${max}% en ofertas · <a href="/ofertas">Ver ofertas</a>`);
-        }
         const el = $('#promoText');
         let i = 0;
         el.innerHTML = mensajes[0];
@@ -472,8 +465,6 @@
         const conImagen = P.filter(p => p.imagenes.length && isAvailable(p));
         const destacados = byRelevance(P.filter(p => p.destacado && isAvailable(p)));
         const slides = (destacados.filter(p => p.imagenes.length).length ? destacados.filter(p => p.imagenes.length) : conImagen).slice(0, 4);
-        const ofertas = byRelevance(P.filter(p => p.precioAnterior && isAvailable(p)))
-            .sort((a, b) => discountPct(b) - discountPct(a));
         const masVendidos = byRelevance(P.filter(p => p.masVendido));
         const nuevos = byRelevance(novedades());
         const marcas = [...new Set(P.map(p => p.marca).filter(Boolean))];
@@ -517,7 +508,7 @@
             </section>` : '';
 
         const beneficios = [
-            [ICON.truck, 'Envíos a todo el país', 'Coordinamos la entrega contigo después de tu compra.'],
+            [ICON.truck, 'Envíos dentro de Curicó', 'Coordinamos la entrega contigo después de tu compra.'],
             state.tienda.pagoOnline
                 ? [ICON.lock, 'Pago seguro', 'Paga con tarjeta de crédito o débito mediante Mercado Pago.']
                 : [ICON.lock, 'Paga como prefieras', 'Efectivo, transferencia o tarjeta, a tu elección.'],
@@ -527,7 +518,7 @@
 
         return {
             title: `${STORE} | Tienda online`,
-            description: `Compra online en ${STORE}: ${state.categorias.slice(0, 5).map(c => c.nombre).join(', ') || 'moda, tecnología, hogar y más'}. Envíos a todo el país.`,
+            description: `Compra online en ${STORE}: ${state.categorias.slice(0, 5).map(c => c.nombre).join(', ') || 'moda, tecnología, hogar y más'}. Envíos dentro de Curicó.`,
             html: `
                 <h1 class="visually-hidden">${STORE} · Tienda online</h1>
                 ${hero}
@@ -536,7 +527,6 @@
                 ${rail('Destacados', destacados, '/tienda')}
                 ${rail('Novedades', nuevos, '/novedades')}
                 ${rail('Más vendidos', masVendidos, '/tienda?orden=mas-vendidos')}
-                ${rail('Ofertas', ofertas, '/ofertas')}
                 ${P.length === 0 ? emptyBlock('Muy pronto', 'Estamos preparando nuestros productos. Vuelve pronto.') : ''}
                 <section class="benefits" aria-label="Beneficios">
                     ${beneficios.map(([icon, t, d]) => `<div class="benefit">${icon}<div><h3>${t}</h3><p>${d}</p></div></div>`).join('')}
@@ -808,7 +798,7 @@
                         ${priceHtml(p, 'pdp-price')}
                         <div id="pdpBuy"></div>
                         <div class="pdp-perks">
-                            <div class="perk">${ICON.truck}<div><strong>Envíos a todo el país</strong><span>El costo y el plazo de entrega se coordinan contigo después de la compra.</span></div></div>
+                            <div class="perk">${ICON.truck}<div><strong>Envíos dentro de Curicó</strong><span>El costo y el plazo de entrega se coordinan contigo después de la compra.</span></div></div>
                             <div class="perk">${ICON.lock}<div><strong>${state.tienda.pagoOnline ? 'Pago seguro con Mercado Pago' : 'Paga como prefieras'}</strong><span>${state.tienda.pagoOnline ? 'Tarjetas de crédito y débito. También puedes coordinar tu pago por WhatsApp.' : 'Efectivo, transferencia o tarjeta, coordinado por WhatsApp.'}</span></div></div>
                         </div>
                         <div>
@@ -832,7 +822,7 @@
                             </details>` : ''}
                             <details class="accordion">
                                 <summary>Envío y entrega</summary>
-                                <div class="accordion-body">Hacemos envíos a todo el país. Después de tu compra te contactamos por WhatsApp para confirmar la dirección, el costo y el plazo de entrega. <a class="link-btn" href="/ayuda#envios">Más información</a></div>
+                                <div class="accordion-body">Hacemos Envíos dentro de Curicó. Después de tu compra te contactamos por WhatsApp para confirmar la dirección, el costo y el plazo de entrega. <a class="link-btn" href="/ayuda#envios">Más información</a></div>
                             </details>
                         </div>
                     </div>
@@ -1112,10 +1102,7 @@
                             <h2><span class="step-num">1</span> Contacto</h2>
                             <div class="form-grid">
                                 ${field('nombre', 'Nombre y apellido', 'autocomplete="name" required minlength="3"')}
-                                <div class="form-grid two">
-                                    ${field('email', 'Correo electrónico', 'type="email" autocomplete="email" inputmode="email" required')}
-                                    ${field('telefono', 'Teléfono', 'type="tel" autocomplete="tel" inputmode="tel" placeholder="+56 9 1234 5678" required')}
-                                </div>
+                                ${field('telefono', 'Teléfono', 'type="tel" autocomplete="tel" inputmode="tel" placeholder="+56 9 1234 5678" required')}
                             </div>
                         </section>
                         <section class="form-section">
@@ -1123,12 +1110,11 @@
                             <div class="form-grid">
                                 ${field('direccion', 'Dirección (calle, número, depto.)', 'autocomplete="street-address" required')}
                                 <div class="form-grid two">
-                                    ${field('comuna', 'Comuna', 'autocomplete="address-level2" required')}
+                                    ${field('comuna', 'Comuna', 'autocomplete="address-level2" required', 'Curicó')}
                                     <div class="field">
                                         <label for="ck-region">Región</label>
                                         <select id="ck-region" name="region" autocomplete="address-level1" required>
-                                            <option value="">Elige tu región</option>
-                                            ${REGIONES.map(r => `<option ${c.region === r ? 'selected' : ''}>${esc(r)}</option>`).join('')}
+                                            <option value="">Maule</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1141,13 +1127,8 @@
                         <section class="form-section">
                             <h2><span class="step-num">3</span> Pago</h2>
                             <div class="pay-options" role="radiogroup" aria-label="Método de pago">
-                                ${online ? `
                                 <div class="pay-option">
-                                    <input type="radio" id="pm-mp" name="metodo" value="mercadopago" checked>
-                                    <label for="pm-mp"><strong>Tarjeta de crédito o débito</strong><span>Pago seguro con Mercado Pago. Te llevaremos a su sitio para completar el pago.</span></label>
-                                </div>` : ''}
-                                <div class="pay-option">
-                                    <input type="radio" id="pm-wa" name="metodo" value="whatsapp" ${online ? '' : 'checked'}>
+                                    <input type="radio" id="pm-wa" name="metodo" value="whatsapp">
                                     <div>
                                         <label for="pm-wa"><strong>Coordinar por WhatsApp</strong><span>Envías tu pedido por WhatsApp y acordamos contigo el pago y la entrega.</span></label>
                                         <div class="field">
@@ -1199,7 +1180,6 @@
         const datos = Object.fromEntries(new FormData(form));
         const errores = {};
         if ((datos.nombre || '').trim().length < 3) errores.nombre = 'Ingresa tu nombre completo.';
-        if (!EMAIL_RE.test((datos.email || '').trim())) errores.email = 'Ingresa un correo válido.';
         if ((datos.telefono || '').replace(/[^0-9]/g, '').length < 8) errores.telefono = 'Ingresa un teléfono válido.';
         if (!(datos.direccion || '').trim()) errores.direccion = 'Ingresa tu dirección.';
         if (!(datos.comuna || '').trim()) errores.comuna = 'Ingresa tu comuna.';
@@ -1412,7 +1392,7 @@ Pedido ${id}`;
             <div class="container prose fade-in">
                 <div class="page-head"><h1 class="page-title">Ayuda</h1></div>
                 <h2 id="envios">Envíos</h2>
-                <p>Hacemos envíos a todo el país. Después de tu compra te contactamos por WhatsApp para confirmar tu dirección, el costo y el plazo de entrega.</p>
+                <p>Hacemos Envíos dentro de Curicó. Después de tu compra te contactamos por WhatsApp para confirmar tu dirección, el costo y el plazo de entrega.</p>
                 <h2 id="pagos">Formas de pago</h2>
                 <ul>
                     ${state.tienda.pagoOnline ? '<li><strong>Tarjeta de crédito o débito</strong> mediante Mercado Pago. El pago se procesa en el sitio seguro de Mercado Pago; nosotros nunca vemos los datos de tu tarjeta.</li>' : ''}
@@ -1527,7 +1507,7 @@ Pedido ${id}`;
 
     function paint(view, { keepScroll = false, scrollTo = null } = {}) {
         document.title = view.title || STORE;
-        setMeta('name', 'description', view.description || `Compra online en ${STORE}. Envíos a todo el país.`);
+        setMeta('name', 'description', view.description || `Compra online en ${STORE}. Envíos dentro de Curicó.`);
         setMeta('name', 'robots', view.noindex ? 'noindex, follow' : 'index, follow');
         setMeta('property', 'og:title', view.title || STORE);
         setMeta('property', 'og:description', view.description || '');
