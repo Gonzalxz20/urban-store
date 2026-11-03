@@ -467,7 +467,7 @@
         const slides = (destacados.filter(p => p.imagenes.length).length ? destacados.filter(p => p.imagenes.length) : conImagen).slice(0, 4);
         const masVendidos = byRelevance(P.filter(p => p.masVendido));
         const nuevos = byRelevance(novedades());
-        const marcas = [...new Set(P.map(p => p.marca).filter(Boolean))];
+        const marcas = [...new Set(P.map(p => p.marca).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
 
         const hero = slides.length ? `
             <section class="hero" aria-label="Destacados">
@@ -1114,7 +1114,8 @@
                                     <div class="field">
                                         <label for="ck-region">Región</label>
                                         <select id="ck-region" name="region" autocomplete="address-level1" required>
-                                            <option value="">Maule</option>
+                                            <option value="">Selecciona tu región</option>
+                                            ${REGIONES.map(r => `<option value="${esc(r)}">${esc(r)}</option>`).join('')}
                                         </select>
                                     </div>
                                 </div>
