@@ -1114,8 +1114,7 @@
                                     <div class="field">
                                         <label for="ck-region">Región</label>
                                         <select id="ck-region" name="region" autocomplete="address-level1" required>
-                                            <option value="">Selecciona tu región</option>
-                                            ${REGIONES.map(r => `<option value="${esc(r)}">${esc(r)}</option>`).join('')}
+                                            <option value="Maule" selected>Maule</option>
                                         </select>
                                     </div>
                                 </div>
